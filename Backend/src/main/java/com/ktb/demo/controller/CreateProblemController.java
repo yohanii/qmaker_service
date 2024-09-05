@@ -18,8 +18,9 @@ public class CreateProblemController {
 
     @PostMapping("/problem-sets")
     public ResponseEntity<CreateProblemSetsResponse> createProblemSetsResponse(@RequestBody String note){
-        // note 데이터 service에 보내고
-        ProblemSet problemset = problemSetService.save(note);
-        return ResponseEntity.ok(CreateProblemSetsResponse.of(problemset));
+
+        ProblemSet problemSet = problemSetService.save(note);
+
+        return ResponseEntity.ok(CreateProblemSetsResponse.of(problemSet));
     }
 }

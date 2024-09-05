@@ -13,14 +13,15 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateProblemSetsResponse {
+
     private String id;
     private int count;
-    private List<QuestionDTO> problems;
+    private List<QuestionDto> problems;
 
 
     public static CreateProblemSetsResponse of(ProblemSet problemSet) {
-        List<QuestionDTO> questions = problemSet.getProblems().stream()
-                .map(p -> new QuestionDTO(p.getQuestion(),p.getOptions()))
+        List<QuestionDto> questions = problemSet.getProblems().stream()
+                .map(p -> new QuestionDto(p.getQuestion(), p.getOptions()))
                 .toList();
 
         return new CreateProblemSetsResponse(
@@ -30,13 +31,3 @@ public class CreateProblemSetsResponse {
         );
     }
 }
-
-@Getter
-@Setter
-@AllArgsConstructor
-class QuestionDTO {
-    private String question;
-    private List<String> options;
-}
-
-;
