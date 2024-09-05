@@ -43,8 +43,8 @@ def question_generation(ref_text) -> str:
 
     chain = prompt | llm | StrOutputParser()
 
-    response1 = chain.invoke({
+    response = chain.invoke({
         'text': ref_text
     })
 
-    return response1
+    return response
