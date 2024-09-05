@@ -1,5 +1,6 @@
 package com.ktb.demo.dto;
 
+import com.ktb.demo.entity.ProblemSet;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,27 +13,30 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateProblemSetsResponse {
-    private int id;
+    private String id;
     private int count;
-    private List<ProblemDTO> problems;
+    private List<QuestionDTO> problems;
 
 
-    public static void of(String question, List<String> options) {
-        ProblemDTO problems = new ProblemDTO(question, options);
-        int count = options.size();
-        int id = 0;
-        //return new CreateProblemSetsResponse();
+    public static CreateProblemSetsResponse of(ProblemSet problemSet) {
+        List<QuestionDTO> questions = problemSet.getProblems().stream()
+                .map(p -> new QuestionDTO(p.getQuestion(),p.getOptions()))
+                .toList();
+
+        return new CreateProblemSetsResponse(
+                problemSet.getId(),
+                problemSet.getCount(),
+                questions
+        );
     }
 }
 
-class ProblemDTO {
+@Getter
+@Setter
+@AllArgsConstructor
+class QuestionDTO {
     private String question;
     private List<String> options;
-
-    public ProblemDTO(String question, List<String> options) {
-        this.question = question;
-        this.options = options;
-    }
 }
 
 ;
