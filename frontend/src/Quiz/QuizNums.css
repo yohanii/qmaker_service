@@ -1,11 +1,12 @@
 .nums-container {
     display: flex;
     flex-direction: column;
-    align-items: baseline;
-    justify-content: space-between; 
-    height: 100%; 
+    align-items: flex-start;
+    justify-content: flex-start; 
+    height: 95%; 
     box-sizing: border-box;
     margin-left: 10px;
+    margin-top: 3%;
 }
 
 .num-button {
@@ -15,7 +16,7 @@
     border-radius: 10px; 
     color: #828282;
     border: none;
-    font-size: 18px;
+    font-size: medium;
     cursor: pointer;
     transition: color 0.3s ease;
     text-align: left;
@@ -29,4 +30,30 @@
 .num-button.active {
     font-weight: bold;       
     color: black;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.status {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-left: 10px;
+    align-items: last baseline;
+    margin-left: auto;
+}
+
+.solved {
+    background-color: #3FC800;
+    opacity: 0.5;
+}
+
+.unsolved {
+    background-color: #F2F2F2;
 }

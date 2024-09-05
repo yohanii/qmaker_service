@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import "./QuizContents.css"
+import "./QuizContents.css";
 
 function QuizContents({ answers, problemIndex, onAnswerSubmit }) {
     const [problem, setProblem] = useState(null);
+    const answerLabels = ['A', 'B', 'C', 'D']; // 선택지 앞에 붙일 라벨
 
     // 문제 데이터를 세션 스토리지에서 불러오기
     useEffect(() => {
@@ -18,22 +19,21 @@ function QuizContents({ answers, problemIndex, onAnswerSubmit }) {
     if (!problem) return <div>Loading...</div>;
 
     return (
-        <div>
-            <div className="question-idx">{problemIndex+1}</div>
-            <div className="question">{problem.question}</div>
+        <div className="quiz-container">
+            <div className="question-header">
+                <div className="question-idx">Question {problemIndex + 1}</div>
+                <div className="question">{problem.question}</div>
+            </div>
             <ul className="options">
                 {problem.options.map((option, index) => (
-                    <label>
-                        <li key={index}>
-                        <input
-                            type="radio"
-                            name={`problem_${problemIndex}`}
-                            checked={index === answers[problemIndex]}
-                            onChange={() => handleAnswerClick(index)} 
-                        />
+                    <li
+                        key={index}
+                        className={`option-item ${index === answers[problemIndex] ? "selected" : ""}`}
+                        onClick={() => handleAnswerClick(index)}
+                    >
+                        <span className="option-label">{answerLabels[index]}</span>
                         {option}
-                        </li>
-                    </label>
+                    </li>
                 ))}
             </ul>
         </div>
