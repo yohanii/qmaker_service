@@ -87,10 +87,10 @@ function Quiz() {
     
     return (
         <>
-            <div className="progress-bar">
-                <ProgressBar solvedCount={solvedCount} />
-            </div>
             <div className="width-container">
+                <div className="progress-wrapper">
+                    <ProgressBar solvedCount={solvedCount} />
+                </div>
                 <div className="sidebar">
                     <QuizNums currentProblem={currentProblem} onProblemSelect={handleProblemSelect} />
                 </div>

@@ -6,16 +6,23 @@ function QuizNums({ currentProblem, onProblemSelect }) {
 
     return (
         <>
-            <div className="guide">Question List</div>
             <div className="nums-container">
-                {numbers.map((num, index) => (
-                    <button 
-                        key={index} 
-                        className={`num-button ${index === currentProblem ? 'active' : ''}`}
-                        onClick={() => onProblemSelect(index)}>
-                        {num}
-                    </button>
-                ))}
+                {numbers.map((num, index) => {
+                    const problemData = JSON.parse(sessionStorage.getItem(`problem_${index}`));
+                    const problemTitle = problemData?.question;
+                    const truncatedTitle = problemTitle.length > 5 ? problemTitle.slice(0, 5).trim() + '...' : problemTitle;
+
+                    const formattedNum = String(num).padStart(2, '0');
+
+                    return (
+                        <button 
+                            key={index} 
+                            className={`num-button ${index === currentProblem ? 'active' : ''}`}
+                            onClick={() => onProblemSelect(index)}>
+                            {formattedNum}. {truncatedTitle}
+                        </button>
+                    );
+                })}
             </div>
         </>
     );

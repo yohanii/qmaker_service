@@ -9,7 +9,7 @@ function ProgressBar({ solvedCount }) {
         <div className="progress-container">
             <div 
                 className="progress-bar" 
-                style={{ width: `${progressPercentage}%` }}>
+                style={{ height: `${progressPercentage}%` }}>
             </div>
         </div>
     );

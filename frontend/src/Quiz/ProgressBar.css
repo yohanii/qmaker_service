@@ -1,11 +1,16 @@
+.progress-bar {
+    background-color: #2531D0;
+    opacity: 0.5;
+    width: 100%;
+    transition: height 0.3s ease; 
+}
+
 .progress-container {
     display: flex;
-    background-color: #c32121;
-    height: 20px;
-    /* width: 100%; */
+    flex-direction: column;
+    background-color: #F2F2F2;
+    width: 10px;
+    height: 100%;
     position: relative;
 }
 
-.progress-bar {
-    background-color: #4caf50;
-}
