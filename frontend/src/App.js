@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Mainpage from './Mainpage/Mainpage';
 import Header from './Layout/Header';
 import Quiz from './Quiz/Quiz';
+import Answer from './Answer/answer';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Routes>
       <Route path="/" element={<Mainpage />}></Route>
       <Route path="quiz" element={<Quiz />}></Route>
+      <Route path="answer" element={<Answer />}></Route>
       </Routes>
       </BrowserRouter>
     </div>

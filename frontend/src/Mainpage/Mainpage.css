@@ -1,30 +1,97 @@
-
-.main-text{
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.Mainbody {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 65vh;
+  padding: 15px;
 }
 
-.note-area{
-    width: 60%;
-    height: 600px;
-    margin-left: 20%;
-    border-radius: 13px;
-    border: 30;
-    background-color: #EFEDED;
+.main-text {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 2em;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 300;
 }
 
-.makeBtn{
-    display: flex;
-    width: 16%;
-    margin-left: 42%;
-    margin-top: 50px;
-    border: 0;
-    border-radius: 5px;
-    height: 40px;
-    padding-top: 13px;
+.notebook {
+  position: relative;
+  width: 600px;
+  height: 700px;
+  background-color: #fff;
+  border-radius: 0 5px 5px 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
-.makeText{
-    margin-left: 35%;
+.notebook-line {
+  position: absolute;
+  left: 30px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: #ff9999;
+}
+
+.note-area {
+  width: 90%;
+  height: 100%;
+  border: none;
+  background-image: repeating-linear-gradient(
+    #f0f0f0 0px,
+    #f0f0f0 1px,
+    transparent 1px,
+    transparent 27px
+  );
+  background-size: 100% 27px;
+  line-height: 27px;
+  padding: 0 0px 0 40px;
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
+  resize: none;
+  outline: none;
+}
+
+.makeBtn {
+  margin-top: 30px;
+  width: 220px;
+  height: 50px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.makeBtn:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+}
+
+.makeBtn:active {
+  transform: translateY(0);
+}
+
+.makeText {
+  text-align: center;
+  line-height: 50px;
+}
+
+.PencliImg {
+  position: absolute;
+  width: 40px;
+  margin-left: 41%;
+  margin-top: -48%;
+}
+
+.char-count {
+  margin-top: 10px;
+  font-size: 0.9em;
+  color: #555;
 }
