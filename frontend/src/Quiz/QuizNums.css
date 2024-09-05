@@ -9,15 +9,16 @@
 
 .guide {
     text-align: center;
-    font-size: 24px;
-    margin-bottom: 20px;
+    font-size: 20px;
+    margin-top: 15px;
+    margin-bottom: 10px;
 }
 
 .num-button {
     width: 100px;
     height: 50px;
     border-radius: 10px; 
-    background-color: #4CAF50; 
+    background-color: #a6cca7; 
     border: none;
     font-size: 18px;
     cursor: pointer;
@@ -26,4 +27,10 @@
 
 .num-button:hover {
     background-color: #45a049; 
+}
+
+.num-button.active {
+    background-color: #ffcc00;
+    font-weight: bold;       
+    color: black;
 }

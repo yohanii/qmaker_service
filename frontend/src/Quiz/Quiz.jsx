@@ -62,7 +62,21 @@ function Quiz() {
         updatedStates[index] = answer;
         setProblemStates(updatedStates);
         sessionStorage.setItem('answers', JSON.stringify(updatedStates));
+        
     };
+
+    const handleNext = () => {
+        if (currentProblem < 9) {
+            setCurrentProblem(currentProblem + 1);
+        }
+    };
+
+    const handlePrev = () => {
+        if (currentProblem > 0) {
+            setCurrentProblem(currentProblem - 1);
+        }
+    };
+
 
     // 퀴즈넘에서 특정 숫자의 버튼 클릭하면 그 버튼의 숫자(인덱스)를 컨텐츠로 전달
     // ..컨텐츠에서 해당 인덱스의 문제 세션 스토리지에서 불러와서 렌더링
@@ -70,6 +84,7 @@ function Quiz() {
 
     // Quiz 파일에서는 TestDataSet/ProblemTestData.jsx를 불러와 안의 값들을 세션스토리지에 구분하여 저장. 
 
+    
     return (
         <>
             <div className="progress-bar">
@@ -77,15 +92,33 @@ function Quiz() {
             </div>
             <div className="width-container">
                 <div className="sidebar">
-                    <QuizNums onProblemSelect={handleProblemSelect} />
+                    <QuizNums currentProblem={currentProblem} onProblemSelect={handleProblemSelect} />
                 </div>
                 <div className="quiz">
                     {currentProblem !== null && (
-                        <QuizContents 
-                            answers={problemStates}
-                            problemIndex={currentProblem} 
-                            onAnswerSubmit={handleAnswerSubmit} 
-                        />
+                        <>
+                            <QuizContents
+                                answers={problemStates}
+                                problemIndex={currentProblem}
+                                onAnswerSubmit={handleAnswerSubmit}
+                            />
+                            <div className="navigation-buttons">
+                                <button 
+                                    className="nav-button prev-button" 
+                                    onClick={handlePrev}
+                                    disabled={currentProblem === 0}
+                                >
+                                    이전 문제
+                                </button>
+                                <button 
+                                    className="nav-button next-button" 
+                                    onClick={handleNext}
+                                    disabled={currentProblem === 9}
+                                >
+                                    다음 문제
+                                </button>
+                            </div>
+                        </>
                     )}
                 </div>
             </div>
@@ -94,5 +127,3 @@ function Quiz() {
 }
 
 export default Quiz;
-
-

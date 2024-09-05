@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./QuizContents.css"
 
 function QuizContents({ answers, problemIndex, onAnswerSubmit }) {
     const [problem, setProblem] = useState(null);
@@ -18,10 +19,12 @@ function QuizContents({ answers, problemIndex, onAnswerSubmit }) {
 
     return (
         <div>
+            <div className="question-idx">{problemIndex+1}</div>
             <div className="question">{problem.question}</div>
-            <ul>
+            <ul className="options">
                 {problem.options.map((option, index) => (
-                    <li key={index}>
+                    <label>
+                        <li key={index}>
                         <input
                             type="radio"
                             name={`problem_${problemIndex}`}
@@ -29,7 +32,8 @@ function QuizContents({ answers, problemIndex, onAnswerSubmit }) {
                             onChange={() => handleAnswerClick(index)} 
                         />
                         {option}
-                    </li>
+                        </li>
+                    </label>
                 ))}
             </ul>
         </div>
