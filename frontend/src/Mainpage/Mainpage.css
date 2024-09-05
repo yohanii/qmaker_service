@@ -1,0 +1,30 @@
+
+.main-text{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.note-area{
+    width: 60%;
+    height: 600px;
+    margin-left: 20%;
+    border-radius: 13px;
+    border: 30;
+    background-color: #EFEDED;
+}
+
+.makeBtn{
+    display: flex;
+    width: 16%;
+    margin-left: 42%;
+    margin-top: 50px;
+    border: 0;
+    border-radius: 5px;
+    height: 40px;
+    padding-top: 13px;
+}
+
+.makeText{
+    margin-left: 35%;
+}
