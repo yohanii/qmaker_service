@@ -1,12 +1,11 @@
 .progress-container {
+    display: flex;
     background-color: #c32121;
     height: 20px;
-    width: 100%;
+    /* width: 100%; */
     position: relative;
 }
 
 .progress-bar {
     background-color: #4caf50;
-    height: 100%;
-    position: absolute;
 }

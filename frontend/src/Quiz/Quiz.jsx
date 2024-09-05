@@ -16,6 +16,11 @@ function Quiz() {
     const [problemStates, setProblemStates] = useState(Array(10).fill(-1));
     const [solvedCount, setSolvedCount] = useState('');
 
+    useEffect(() => {
+        handleProblemSelect(sessionStorage.getItem('currentProblem'));
+    }, []);
+    
+
     // 푼 문제의 개수 카운팅
     useEffect(() => {
         setSolvedCount(problemStates.filter(state => state !== -1).length);
@@ -33,7 +38,14 @@ function Quiz() {
     // QuizNums에서 선택한 문제의 인덱스를 받아서 currentProblem 업데이트
     const handleProblemSelect = (index) => {
         setCurrentProblem(index);
+        
+        /////////////// 새로고침시 current problem 바로 뜨게
+        sessionStorage.setItem('currendProblem', currentProblem);
     };
+
+    useEffect(()=>{
+
+    });
 
     // QuizContents에서 답 선택 후 문제 상태를 업데이트
     const handleAnswerSubmit = (index, answer) => {
