@@ -1,6 +1,6 @@
 import './Mainpage.css';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { SendNoteData } from '../util/http';
 
 export default function Mainpage() {
@@ -18,7 +18,6 @@ export default function Mainpage() {
   };
 
   const handleSetTab = (e) => {
-    console.log(e.keyCode);
     if (e.keyCode === 9) {
       e.preventDefault();
       let val = e.target.value;
