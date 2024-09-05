@@ -11,7 +11,7 @@ router = APIRouter()
 logger = logging.getLogger("uvicorn")
 
 
-@router.get("/ref_text")
+@router.post("/problems")
 async def get_question(ref_text: str = "") -> MultipleChoiceQuestionList:
     logger.info("get_question start")
     logger.info(f"ref_text : {ref_text}")
