@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient(name = "AiServer", url = "${AI_SERVICE_URL}")
 public interface AiClient {
 
-    @PostMapping("/problem-sets")
+    @PostMapping("/problems")
     AiCreateProblemSetResponse generateProblemSet(@RequestBody AiCreateProblemSetRequest request);
 
 }
