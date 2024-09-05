@@ -5,7 +5,14 @@
     font-style: normal;
 }
 
-.Logo{
-    margin: 10%;
+body{
+    margin-top: 2%;
+}
+
+.Logo {
+    text-decoration: none;
+    margin-left: 3%;
+    color: inherit;
+    font-size: 35px;
     font-family: GangwonEduPowerExtraBoldA;
 }

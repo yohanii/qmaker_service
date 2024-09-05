@@ -10,7 +10,7 @@ function QuizNums({ currentProblem, onProblemSelect }) {
                 {numbers.map((num, index) => {
                     const problemData = JSON.parse(sessionStorage.getItem(`problem_${index}`));
                     const problemTitle = problemData?.question;
-                    const truncatedTitle = problemTitle.length > 5 ? problemTitle.slice(0, 5).trim() + '...' : problemTitle;
+                    const truncatedTitle = problemTitle && problemTitle.length > 5 ? problemTitle.slice(0, 5).trim() + '...' : problemTitle;
 
                     const formattedNum = String(num).padStart(2, '0');
 
