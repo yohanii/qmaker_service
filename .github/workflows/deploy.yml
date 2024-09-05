@@ -20,9 +20,9 @@ jobs:
           aws-region: ap-northeast-2
 
       # Frontend 빌드 및 S3 배포
-      - name: Build and deploy Frontend
+      - name: Build and deploy frontend
         run: |
-          cd Frontend
+          cd frontend
           npm ci
           CI=false npm run build
           aws s3 sync build/ s3://${{ secrets.QMAKER_S3_BUCKET }} --delete
