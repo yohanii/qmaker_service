@@ -1,0 +1,4 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://dygks924:1234@cluster0.dyrgm.mongodb.net/mydb?retryWrites=true&w=majority
