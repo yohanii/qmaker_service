@@ -3,7 +3,7 @@ import "./QuizContents.css";
 
 function QuizContents({ answers, problemIndex, onAnswerSubmit }) {
     const [problem, setProblem] = useState(null);
-    const answerLabels = ['A', 'B', 'C', 'D']; // 선택지 앞에 붙일 라벨
+    const answerLabels = ['A', 'B', 'C', 'D'];
 
     // 문제 데이터를 세션 스토리지에서 불러오기
     useEffect(() => {

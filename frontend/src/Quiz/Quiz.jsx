@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // 페이지 이동을 위한 hook
+import { useNavigate } from "react-router-dom";
 import QuizNums from "./QuizNums";
 import QuizContents from "./QuizContents";
 import ProgressBar from "./ProgressBar";
@@ -12,7 +12,7 @@ function Quiz() {
         JSON.parse(sessionStorage.getItem('answers')) || Array(10).fill(-1)
     );
     const [solvedCount, setSolvedCount] = useState(0);
-    const navigate = useNavigate(); // 페이지 이동을 위한 hook
+    const navigate = useNavigate();
 
     // 현재 선택한 문제 상태
     const [currentProblem, setCurrentProblem] = useState(
@@ -24,7 +24,12 @@ function Quiz() {
         setSolvedCount(problemStates.filter(state => state !== -1).length);
     }, [problemStates]);
 
-    // 문제 선택 시 업데이트
+    // 현재 문제 상태가 변경될 때 세션 스토리지에 저장
+    useEffect(() => {
+        sessionStorage.setItem('currentProblem', currentProblem); 
+    }, [currentProblem]);
+
+    // 문제 선택 시 현재 문제 상태 업데이트
     const handleProblemSelect = (index) => {
         setCurrentProblem(index);
     };
@@ -37,21 +42,21 @@ function Quiz() {
         sessionStorage.setItem('answers', JSON.stringify(updatedStates));
     };
 
-    // 다음 문제로 이동
+    // 다음 문제
     const handleNext = () => {
         if (currentProblem < 9) {
             setCurrentProblem(currentProblem + 1);
         }
     };
 
-    // 이전 문제로 이동
+    // 이전 문제
     const handlePrev = () => {
         if (currentProblem > 0) {
             setCurrentProblem(currentProblem - 1);
         }
     };
 
-    // 모든 문제를 다 풀었는지 확인 (문제 상태 배열에 -1이 있는지 확인)
+    // 모든 문제를 다 풀었는지 확인
     const allSolved = problemStates.every(state => state !== -1);
 
     // 제출하기 버튼 클릭 시 answer 페이지로 이동
