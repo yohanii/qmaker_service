@@ -187,6 +187,7 @@ resource "aws_instance" "db_instance" {
    subnet_id     = var.db_subnets[0]
    security_groups = [aws_security_group.db_sg.id]
    private_ip    = "10.0.5.12"
+   key_name = "kakao-tech-bootcamp"
 
    tags = merge(local.common_tags, {
     Name = "ktb-qmaker-db-host"
