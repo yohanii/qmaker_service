@@ -2,3 +2,5 @@ spring:
   data:
     mongodb:
       uri: mongodb+srv://dygks924:1234@cluster0.dyrgm.mongodb.net/mydb?retryWrites=true&w=majority
+
+AI_SERVICE_URL: localhost:8000/api/v1/
