@@ -2,17 +2,29 @@ output "vpc_id" {
   value = aws_vpc.main_vpc.id
 }
 
-output "private_subnets" {
-  description = "Private 서브넷의 ID 리스트"
+# Public 서브넷 ID 출력
+output "public_subnets" {
+  description = "Public subnet IDs"
   value = [
-    for subnet in aws_subnet.subnets : subnet.id if !subnet.map_public_ip_on_launch
+    for key, subnet in aws_subnet.subnets : subnet.id
+    if substr(key, 0, 6) == "public"
   ]
 }
 
-
-output "public_subnets" {
-  description = "Public 서브넷의 ID 리스트"
+# Private 서브넷 ID 출력
+output "private_subnets" {
+  description = "Private subnet IDs"
   value = [
-    for subnet in aws_subnet.subnets : subnet.id if subnet.map_public_ip_on_launch
+    for key, subnet in aws_subnet.subnets : subnet.id
+    if substr(key, 0, 7) == "private"
+  ]
+}
+
+# DB 서브넷 ID 출력
+output "db_subnets" {
+  description = "DB subnet IDs"
+  value = [
+    for key, subnet in aws_subnet.subnets : subnet.id
+    if substr(key, 0, 2) == "db"
   ]
 }

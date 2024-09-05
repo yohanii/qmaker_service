@@ -98,7 +98,7 @@ resource "aws_lb" "backend_alb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.backend_sg.id]
-  subnets            = var.public_subnets
+  subnets            = var.private_subnets
 
   tags = merge(local.common_tags, {
     Name = "ktb-qmaker-backend-alb"
@@ -129,7 +129,12 @@ resource "aws_instance" "backend_instances" {
   ami           = "ami-0c2acfcb2ac4d02a0" # Amazon Linux 2 AMI (최신 확인 필요)
   instance_type = "t2.small"
   subnet_id     = element(var.private_subnets, count.index)
+  key_name = "kakao-tech-bootcamp"
   security_groups = [aws_security_group.backend_sg.id]
+  private_ip    = lookup({
+    0 = "10.0.3.222"
+    1 = "10.0.4.16"
+  }, count.index)
 
   tags = merge(local.common_tags, {
     Name = "ktb-qmaker-backend-instance-${count.index}"
@@ -150,11 +155,16 @@ resource "aws_instance" "python_instances" {
   count         = 2
   ami           = "ami-0c2acfcb2ac4d02a0"  # Amazon Linux 2 AMI (최신 확인 필요)
   instance_type = "t3.small"
+  key_name = "kakao-tech-bootcamp"
   subnet_id     = element(var.private_subnets, count.index)
   security_groups = [aws_security_group.python_sg.id]
+  private_ip    = lookup({
+    0 = "10.0.3.224"
+    1 = "10.0.4.152"
+  }, count.index)
 
   tags = merge(local.common_tags, {
-    Name = "ktb-qmaker-python-instance-${count.index}"
+    Name = "ktb-qmaker-ai-instance-${count.index}"
   })
 }
 
@@ -167,5 +177,61 @@ resource "aws_instance" "qmaker_dev_host" {
 
   tags = merge(local.common_tags, {
     Name = "ktb-qmaker-dev-host"
+  })
+}
+
+# DB 인스턴스 생성
+resource "aws_instance" "db_instance" {
+   ami           = "ami-05d768df76a2b8bd8"
+   instance_type = "t3.small"
+   subnet_id     = var.db_subnets[0]
+   security_groups = [aws_security_group.db_sg.id]
+   private_ip    = "10.0.5.12"
+
+   tags = merge(local.common_tags, {
+    Name = "ktb-qmaker-db-host"
+  })
+}
+
+resource "aws_security_group" "db_sg" {
+  vpc_id = var.vpc_id
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 27017
+    to_port     = 27017
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 9100
+    to_port     = 9100
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 9090
+    to_port     = 9090
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = merge(local.common_tags, {
+    Name = "ktb-qmaker-db-sg"
   })
 }
