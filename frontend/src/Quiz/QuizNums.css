@@ -1,0 +1,29 @@
+.nums-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: space-between; 
+    height: 90%; 
+    box-sizing: border-box;
+}
+
+.guide {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.num-button {
+    width: 100px;
+    height: 50px;
+    border-radius: 10px; 
+    background-color: #4CAF50; 
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.num-button:hover {
+    background-color: #45a049; 
+}

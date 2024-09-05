@@ -1,21 +1,19 @@
-import './App.css';
-import { Routes, Route, BrowserRouter } from "react-router-dom";
-import MainLayout from './MainLayout';
-import Quiz from './Quiz'; 
-import Answer from './Answer'; 
-import Input from './Input';
+import React, { Component } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Mainpage from './Mainpage/Mainpage';
+import Quiz from './Quiz/Quiz';
+import './App.css'
 
 function App() {
   return (
-    <BrowserRouter>
+    <div className="App">
+      <BrowserRouter>
       <Routes>
-        <Route path="/" element={<MainLayout />}>
-          <Route path="input" element={<Input />} />
-          <Route path="quiz" element={<Quiz />} />
-          <Route path="answer" element={<Answer />} />
-        </Route>
+      <Route path="/" element={<Mainpage />}></Route>
+      <Route path="quiz" element={<Quiz />}></Route>
       </Routes>
-    </BrowserRouter>
+      </BrowserRouter>
+    </div>
   );
 }
 
