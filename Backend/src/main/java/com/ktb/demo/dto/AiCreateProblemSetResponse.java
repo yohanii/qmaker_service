@@ -1,12 +1,10 @@
 package com.ktb.demo.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
+@ToString
 @Getter
 @Setter
 @NoArgsConstructor
@@ -14,6 +12,7 @@ import java.util.List;
 public class AiCreateProblemSetResponse {
 
     private int count;
+    private List<String> categories;
     private List<ProblemDto> problems;
 
 }

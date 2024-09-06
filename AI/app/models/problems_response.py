@@ -9,9 +9,11 @@ class Problem(BaseModel):
     options: List[str] = Field(description="Choices of the problem")
     answer: int = Field(description="The index of the correct answer")
     explanation: str = Field(description="Explanation of the answer")
+    category: str = Field(description="Category of the problem")
 
 
 # 여러 개의 문제를 담기 위한 모델
 class ProblemsResponse(BaseModel):
     count: int = Field(description="Number of problems")
+    categories: List[str] = Field(description="Categories of the problems")
     problems: List[Problem] = Field(description="List of problems ")
