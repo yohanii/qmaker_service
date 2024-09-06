@@ -102,7 +102,6 @@ def category_question_generation(ref_text) -> list:
     category_text = question_categorize(ref_text)
     category_questions = []
     for category in category_text:
-        category_question = json.loads(question_generation(category.origin_text, category.category))
-        category_questions.append(category_question)
+        category_questions.extend(json.loads(question_generation(category.origin_text, category.category)))
     return category_questions
 
