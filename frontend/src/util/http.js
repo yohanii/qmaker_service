@@ -2,7 +2,7 @@
 export async function SendNoteData(textValue) {
   try {
     const response = await fetch(
-      `http://backend-alb-1085769372.ap-northeast-2.elb.amazonaws.com/problem-sets`,
+      `http://backend-alb-1085769372.ap-northeast-2.elb.amazonaws.com/api/v1/problem-sets`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -20,12 +20,11 @@ export async function SendNoteData(textValue) {
 }
 
 // 채점 결과
-
-export async function AnswerData(answers) {
+export async function AnswerData(id, answers) {
   const answerString = answers.join(',');
   try {
     const response = await fetch(
-      `http://backend-alb-1085769372.ap-northeast-2.elb.amazonaws.com/problem-sets/S232424RWESD23/solved?answers=${answerString}`,
+      `http://backend-alb-1085769372.ap-northeast-2.elb.amazonaws.com/api/v1/problem-sets/${id}/solved?answers=${answerString}`,
       {
         method: 'GET',
       }
@@ -35,7 +34,6 @@ export async function AnswerData(answers) {
       const data = await response.json();
       return data;
     } else {
-      // 오류 처리
       console.error('API 요청 실패');
     }
   } catch (error) {

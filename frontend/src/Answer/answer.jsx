@@ -1,23 +1,23 @@
+// src/Answer.js
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import AnswerNums from './AnswerNums';
 import AnswerContent from './AnswerContent';
 import ProgressBar from '../Quiz/ProgressBar';
-import ChartResult from "../Chart/ChartResult";
-import { ProblemCheckAnswer } from '../TestDataSet/ProblemCheckAnswer';
+import ChartResult from '../Chart/ChartResult';
+import { AnswerData } from '../util/http';
 import './Answer.css';
 
 function Answer() {
+  const location = useLocation();
   const [currentProblem, setCurrentProblem] = useState(0);
   const [userAnswers, setUserAnswers] = useState([]);
   const [results, setResults] = useState(null);
+  const [allresults, setallresults] = useState(null);
+
+  const problemData = location.state?.problemData;
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    console.log('Results:', results);
-    console.log('User Answers:', userAnswers);
-  }, [results, userAnswers]);
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -25,10 +25,19 @@ function Answer() {
       const storedAnswers = JSON.parse(sessionStorage.getItem('answers')) || [];
       setUserAnswers(storedAnswers);
 
-      // API 호출을 시뮬레이션합니다. 실제 구현 시에는 이 부분을 실제 API 호출로 대체하세요.
-      const data = ProblemCheckAnswer;
-      sessionStorage.setItem('scoreObj', JSON.stringify(data.score));
-      setResults(data.results);
+      // URL에서 문제 집합 ID를 가져옵니다.
+      const id = sessionStorage.getItem('problemId');
+
+      // API 호출
+      const data = await AnswerData(id, storedAnswers);
+      console.log(data);
+      if (data) {
+        setResults(data.results);
+        setallresults(data);
+        sessionStorage.setItem('scoreObj', JSON.stringify(data.score));
+      } else {
+        console.error('데이터를 가져오는 데 실패했습니다.');
+      }
     };
     fetchResults();
   }, []);
@@ -56,7 +65,7 @@ function Answer() {
     navigate('/');
   };
 
-  if (!results) return <div>Loading...</div>;
+  if (!allresults) return <div>Loading...</div>;
 
   return (
     <div className="a-width-container">
@@ -69,6 +78,7 @@ function Answer() {
           onProblemSelect={handleProblemSelect}
           results={results}
           userAnswers={userAnswers}
+          problemData={problemData.problems}
         />
       </div>
       <div className="a-quiz">
@@ -77,6 +87,7 @@ function Answer() {
             userAnswer={userAnswers[currentProblem]}
             problemIndex={currentProblem}
             result={results[currentProblem]}
+            problemData={problemData}
           />
         </div>
         <div className="a-navigation-buttons">
@@ -87,10 +98,7 @@ function Answer() {
           >
             ←
           </button>
-          <button
-            className="a-nav-button reset-button"
-            onClick={handleReset}
-          >
+          <button className="a-nav-button reset-button" onClick={handleReset}>
             Restart Q-maker
           </button>
           <button
@@ -102,13 +110,13 @@ function Answer() {
           </button>
         </div>
       </div>
-      <div className='ex-chart'>
-        <div className='a-explanation'>
-          <div className='a-ex-des'>설명</div>
-          {results[currentProblem].explanation}
+      <div className="ex-chart">
+        <div className="a-explanation">
+          <div className="a-ex-des">설명</div>
+          {results[currentProblem]?.explanation}
         </div>
-        <div className='a-chart'>
-          <ChartResult />
+        <div className="a-chart">
+          <ChartResult allresults={allresults}/>
         </div>
       </div>
     </div>
@@ -116,5 +124,3 @@ function Answer() {
 }
 
 export default Answer;
-
-

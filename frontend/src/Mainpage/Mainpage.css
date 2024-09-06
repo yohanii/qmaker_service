@@ -5,6 +5,20 @@
   align-items: center;
   min-height: 65vh;
   padding: 15px;
+  position: relative;
+}
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+}
+
+.spinner img {
+  width: 80px;
+  height: 80px;
 }
 
 .main-text {
@@ -74,8 +88,8 @@
   transform: translateY(-2px);
 }
 
-.makeBtn:active {
-  transform: translateY(0);
+.makeBtn:disabled {
+  background-color: #aaa; /* 로딩 중 버튼 비활성화 */
 }
 
 .makeText {
@@ -84,10 +98,7 @@
 }
 
 .PencliImg {
-  position: absolute;
   width: 40px;
-  margin-left: 32%;
-  margin-top: -38%;
 }
 
 .char-count {
