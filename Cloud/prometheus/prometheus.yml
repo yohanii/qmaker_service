@@ -1,0 +1,27 @@
+global:
+  scrape_interval: 15s
+
+
+scrape_configs:
+  # Backend job
+  - job_name: 'backend'
+    scrape_interval: 10s
+    static_configs:
+      - targets:
+        - '10.0.3.222:9100'
+        - '10.0.4.16:9100'
+
+  # AI job
+  - job_name: 'ai'
+    scrape_interval: 10s
+    static_configs:
+      - targets:
+        - '10.0.4.152:9100'
+        - '10.0.3.224:9100'
+
+  # Database job
+  - job_name: 'db'
+    scrape_interval: 10s
+    static_configs:
+      - targets:
+        - '10.0.5.12:9100'

@@ -1,10 +1,10 @@
-db.createUser({
+  db.createUser({
     user: "qmaker",
-    pwd: "qlalfqjsgh486",
+    pwd: "qlalfqjsgh486", 
     roles: [
       {
-        role: "root",
-        db: "admin"
-      }
-    ]
+        role: "readWrite",
+        db: "mydb",
+      },
+    ],
   });
