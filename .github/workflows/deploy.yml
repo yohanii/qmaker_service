@@ -1,4 +1,4 @@
-name: Deploy FullStackApp to AWS
+name: Deploy Q-maker to AWS
 
 on:
   push:
@@ -39,14 +39,14 @@ jobs:
       - name: Login to Docker Hub
         run: echo $DOCKER_HUB_PASSWORD | docker login -u $DOCKER_HUB_USERNAME --password-stdin
 
-      # Frontend 빌드 및 S3 배포
-      - name: Build and deploy Frontend
-        run: |
-          cd Frontend
-          npm ci
-          CI=false npm run build
-          aws s3 sync build/ s3://${{ secrets.S3_BUCKET }} --delete
-          aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
+      # # Frontend 빌드 및 S3 배포
+      # - name: Build and deploy Frontend
+      #   run: |
+      #     cd frontend
+      #     npm ci
+      #     CI=false npm run build
+      #     aws s3 sync build/ s3://${{ secrets.QMAKER_S3_BUCKET }} --delete
+      #     aws cloudfront create-invalidation --distribution-id ${{ secrets.QMAKER_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
 
       # Backend, AI 이미지 빌드 및 푸시
       - name: Build and push Docker images
@@ -60,21 +60,60 @@ jobs:
           docker push $DOCKER_HUB_USERNAME/qmaker-ai:latest
 
       # Backend 서비스 배포 (AWS Systems Manager 사용)
-      - name: Deploy Backend services
+      - name: Deploy Backend_0 services
         run: |
           aws ssm send-command \
-            --instance-ids ${{ env.BACKEND_EC2_HOST_ID }} \
+            --instance-ids ${{ env.QMAKER_BACKEND_EC2_HOST_ID_0 }} \
             --document-name "AWS-RunShellScript" \
             --parameters '{
               "commands": [
-                "sudo docker stop backend ai || true",
-                "sudo docker rm backend ai || true",
-                "sudo docker image rm ${{ env.DOCKER_HUB_USERNAME }}/qmaker-ai:latest",
+                "sudo docker stop backend || true",
+                "sudo docker rm backend || true",
                 "sudo docker image rm ${{ env.DOCKER_HUB_USERNAME }}/qmaker-backend:latest",
                 "sudo docker pull ${{ env.DOCKER_HUB_USERNAME }}/qmaker-backend:latest",
+                "sudo docker run -d --name backend --network ec2-user_export_network -p 8080:8080 -e "SPRING_DATA_MONGODB_URI=mongodb+srv://dygks924:1234@cluster0.dyrgm.mongodb.net/mydb?retryWrites=true&w=majority" -e "AI_SERVICE_URL=http://localhost:8000/api/v1" ${{ env.DOCKER_HUB_USERNAME }}/qmaker-backend:latest",
+              ]
+            }'
+      - name: Deploy Backend_1 instance services
+        run: |
+          aws ssm send-command \
+          --instance-ids ${{ env.QMAKER_BACKEND_EC2_HOST_ID_1 }} \
+            --document-name "AWS-RunShellScript" \
+            --parameters '{
+              "commands": [
+                "sudo docker stop backend || true",
+                "sudo docker rm backend || true",
+                "sudo docker image rm ${{ env.DOCKER_HUB_USERNAME }}/qmaker-backend:latest",
+                "sudo docker pull ${{ env.DOCKER_HUB_USERNAME }}/qmaker-backend:latest",
+                "sudo docker run -d --name backend --network ec2-user_export_network -p 8080:8080 -e "SPRING_DATA_MONGODB_URI=mongodb+srv://dygks924:1234@cluster0.dyrgm.mongodb.net/mydb?retryWrites=true&w=majority" -e "AI_SERVICE_URL=http://localhost:8000/api/v1" ${{ env.DOCKER_HUB_USERNAME }}/qmaker-backend:latest",
+              ]
+            }'
+      - name: Deploy AI_0 instance services
+        run: |
+          aws ssm send-command \
+            --instance-ids ${{ env.QMAKER_AI_EC2_HOST_ID_0 }} \
+            --document-name "AWS-RunShellScript" \
+            --parameters '{
+              "commands": [
+                "sudo docker stop ai || true",
+                "sudo docker rm ai || true",
+                "sudo docker image rm ${{ env.DOCKER_HUB_USERNAME }}/qmaker-ai:latest",
                 "sudo docker pull ${{ env.DOCKER_HUB_USERNAME }}/qmaker-ai:latest",
-                "sudo docker run -d --name backend --network ec2-user_export_network -p 8080:8080 -e SPRING_DATASOURCE_URL=jdbc:mysql://172.18.0.3:3306/moviedatabase?serverTimezone=Asia/Seoul -e SPRING_DATASOURCE_USERNAME=root -e SPRING_DATASOURCE_PASSWORD=qlalfqjsgh486 -e AI_SERVICE_URL=http://172.18.0.5:8000/api/v1 ${{ env.DOCKER_HUB_USERNAME }}/qmaker-backend:latest",
-                "sudo docker run -d --name ai --network ec2-user_export_network -p 8000:8000 -e PROJECT_NAME=ParseAI -e DATABASE_URL=mysql+aiomysql://root:qlalfqjsgh486@172.18.0.3:3306/moviedatabase ${{ env.DOCKER_HUB_USERNAME }}/qmaker-ai:latest"
+                "sudo docker run -d --name ai --network ec2-user_export_network -p 8000:8000 -e PROJECT_NAME=QuestionMakerAI ${{ env.DOCKER_HUB_USERNAME }}/qmaker-ai:latest"
+              ]
+            }'
+      - name: Deploy AI_1 instance services
+        run: |
+          aws ssm send-command \
+            --instance-ids ${{ env.QMAKER_AI_EC2_HOST_ID_1 }} \
+            --document-name "AWS-RunShellScript" \
+            --parameters '{
+              "commands": [
+                "sudo docker stop ai || true",
+                "sudo docker rm ai || true",
+                "sudo docker image rm ${{ env.DOCKER_HUB_USERNAME }}/qmaker-ai:latest",
+                "sudo docker pull ${{ env.DOCKER_HUB_USERNAME }}/qmaker-ai:latest",
+                "sudo docker run -d --name ai --network ec2-user_export_network -p 8000:8000 -e PROJECT_NAME=QuestionMakerAI ${{ env.DOCKER_HUB_USERNAME }}/qmaker-ai:latest"
               ]
             }'
 
