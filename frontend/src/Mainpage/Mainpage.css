@@ -106,3 +106,18 @@
   font-size: 0.9em;
   color: #555;
 }
+
+.loading-container {
+  margin-top: 180px;
+  width: 15%;
+}
+
+.loading-container > div {
+  margin-bottom: 10px;
+}
+
+.spans {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
