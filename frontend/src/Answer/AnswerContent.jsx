@@ -9,7 +9,7 @@ function AnswerContent({ userAnswer, problemIndex, result }) {
   useEffect(() => {
     const storedProblem = sessionStorage.getItem(`problem_${problemIndex}`);
     setProblem(JSON.parse(storedProblem));
-    console.log(problem);
+    console.log("problem", problem);
   }, [problemIndex]);
 
   if (!problem) return <div>Loading...</div>;
@@ -19,7 +19,7 @@ function AnswerContent({ userAnswer, problemIndex, result }) {
   return (
     <div className="a-quiz-container">
       <div className="a-question-header">
-        <div className="a-question-idx">Question {problemIndex + 1}</div>
+        <div className="a-question-idx">Question {problemIndex + 1}{"  "}({result.category})</div>
         <div className="a-question">{problem.question}</div>
       </div>
       <ul className="a-options">

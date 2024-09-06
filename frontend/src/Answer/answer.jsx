@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import AnswerNums from './AnswerNums';
 import AnswerContent from './AnswerContent';
 import ProgressBar from '../Quiz/ProgressBar';
+import ChartResult from "../Chart/ChartResult";
 import { ProblemCheckAnswer } from '../TestDataSet/ProblemCheckAnswer';
 import './Answer.css';
 
@@ -26,6 +27,7 @@ function Answer() {
 
       // API 호출을 시뮬레이션합니다. 실제 구현 시에는 이 부분을 실제 API 호출로 대체하세요.
       const data = ProblemCheckAnswer;
+      sessionStorage.setItem('scoreObj', JSON.stringify(data.score));
       setResults(data.results);
     };
     fetchResults();
@@ -102,12 +104,11 @@ function Answer() {
       </div>
       <div className='ex-chart'>
         <div className='a-explanation'>
-          <h3>설명</h3>
+          <div className='a-ex-des'>설명</div>
           {results[currentProblem].explanation}
         </div>
         <div className='a-chart'>
-          {/* <Chart /> */}
-          chart
+          <ChartResult />
         </div>
       </div>
     </div>

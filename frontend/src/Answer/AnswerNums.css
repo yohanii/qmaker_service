@@ -49,18 +49,16 @@
     margin-left: auto;
 }
 
-.a-correct {
-    border-radius: 50%;
-    background-color: #3FC800;
-}
-
-.a-incorrect {
-    
-    border-radius: 50%;
-    background-color: #FF0000;
-}
-
-.a-unsolved {
+.a-status.unsolved {
     border-radius: 50%;
     background-color: #F2F2F2;
 }
+
+.a-option-item.correct {
+    background-color: #a4c894;
+}
+
+.a-option-item.incorrect {
+    background-color: #e8bcc1;
+}
+

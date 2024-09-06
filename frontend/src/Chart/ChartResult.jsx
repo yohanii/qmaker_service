@@ -11,20 +11,35 @@ function ChartResult() {
 
     useEffect(() => {
         const chartInfo = ProblemCheckAnswer;
-
+    
         setCategories(chartInfo.categories || []);
         setScore(chartInfo.score || []);
         setScoreTotal(chartInfo.scoreTotal || 0);
-
-        let tempScoreList = [];
-        for (let i = 0; i < chartInfo.categories.length; i++) {
-            tempScoreList.push(score[categories[i]] || 0);
+    
+        // sessionStorage에서 scoreObj를 가져옴
+        const scoreObjs = JSON.parse(sessionStorage.getItem('scoreObj'));
+        
+        let tempScoreList = sessionStorage.getItem('myScore');
+        
+        if (!tempScoreList && scoreObjs) {
+            tempScoreList = [];
+    
+            // 카테고리 순서대로 scoreObj의 값을 추출하여 배열로 변환
+            chartInfo.categories.forEach((category) => {
+                tempScoreList.push(scoreObjs[category] || 0);  // 카테고리 순서대로 값을 가져옴
+            });
+    
+            sessionStorage.setItem('myScore', JSON.stringify(tempScoreList)); 
+        } else {
+            tempScoreList = JSON.parse(tempScoreList);
         }
+    
         setScoreList(tempScoreList);
-        console.log(tempScoreList);
     }, []);
+    
+    
 
-    console.log("Score List: ", scoreList);
+    console.log("ssss",scoreList);
 
     const options = {
         chart: {
@@ -34,7 +49,7 @@ function ChartResult() {
             }
         },
         xaxis: {
-            categories: categories
+            categories: categories // Set the categories from state
         },
         fill: {
             opacity: 0.5
@@ -57,28 +72,29 @@ function ChartResult() {
         }
     };
 
+    // Series data for the chart
     const series = [{
         name: "Scores",
-        data: scoreList
+        data: scoreList // Set the scoreList from state
     }];
 
     return (
         <>
+            <div className="c-description">문항 카테고리별 정답률</div>
             <div className="chart">
                 <Chart
                     options={options}
-                    series={series} 
+                    series={series}
                     type="radar"
-                    height={350}
+                    height={250}
                 />
             </div>
-            <div className="description">
-                * %로 표현한 결과입니다.
-            </div>
             <div className="score-total">
-                {scoreTotal}/10
+                Your score: {scoreTotal}/10
             </div>
-            
+            <div className="description">
+                * %로 표현한 결과입니다
+            </div>
         </>
     );
 }
