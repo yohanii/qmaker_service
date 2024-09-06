@@ -64,6 +64,11 @@ export const ProblemCheckAnswer = {
 		},
 	],
 	scoreTotal: 6,
-	
-
+  	score: {
+    	"네트워크": 20,
+    	"운영체제": 50,
+    	"컴퓨터구조": 90,
+    	"데이터베이스": 60,
+   		"알고리즘": 80
+  	}
 }
