@@ -14,7 +14,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ProblemSetService {
+public class CreateProblemSetService {
 
     private final ProblemSetRepository problemSetRepository;
     private final AiClient aiClient;
