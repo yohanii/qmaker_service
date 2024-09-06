@@ -97,8 +97,8 @@ resource "aws_lb" "backend_alb" {
   name               = "backend-alb"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.backend_sg.id]
-  subnets            = var.private_subnets
+  security_groups    = [aws_security_group.alb.id]
+  subnets            = var.public_subnets
 
   tags = merge(local.common_tags, {
     Name = "ktb-qmaker-backend-alb"
@@ -107,9 +107,19 @@ resource "aws_lb" "backend_alb" {
 
 resource "aws_lb_target_group" "backend_tg" {
   name        = "backend-tg"
-  port        = 80
+  port        = 8080
   protocol    = "HTTP"
   vpc_id      = var.vpc_id
+
+  health_check {
+    path                = "/health"
+    protocol            = "HTTP"
+    matcher             = "200-299"
+    interval            = 30
+    timeout             = 5
+    healthy_threshold   = 3
+    unhealthy_threshold = 3
+  }
 }
 
 resource "aws_lb_listener" "backend_listener" {
@@ -120,6 +130,29 @@ resource "aws_lb_listener" "backend_listener" {
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.backend_tg.arn
+  }
+}
+
+# ALB를 위한 보안 그룹 생성
+resource "aws_security_group" "alb" {
+  vpc_id = var.vpc_id
+  
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "moive-${terraform.workspace}-sg-alb"
   }
 }
 
