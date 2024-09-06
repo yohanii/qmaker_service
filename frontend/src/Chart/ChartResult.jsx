@@ -32,7 +32,7 @@ function ChartResult({ allresults }) {
       },
     },
     xaxis: {
-      categories: categories, // Set the categories from state
+      categories: categories, 
     },
     fill: {
       opacity: 0.5,
