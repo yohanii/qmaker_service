@@ -38,8 +38,16 @@ public class GradingProblemSetService {
         Map<String, Integer> score = calculateScorePerCategory(problems, userAnswers, findProblemSet.getCategories());
         log.info("score = {}", score);
 
+        List<GradedProblemDto> results = getResults(problems, userAnswers);
+        log.info("results = {}", results);
+
+        return new GradedProblemSetsDto(problems.size(), findProblemSet.getCategories(), results, scoreTotal, score);
+    }
+
+    private static List<GradedProblemDto> getResults(List<Problem> problems, List<Integer> userAnswers) {
+
         AtomicInteger index = new AtomicInteger();
-        List<GradedProblemDto> results = problems.stream()
+        return problems.stream()
                 .map(problem -> new GradedProblemDto(
                         problem.getAnswer() == userAnswers.get(index.getAndIncrement()),
                         problem.getAnswer(),
@@ -48,9 +56,6 @@ public class GradingProblemSetService {
                         )
                 )
                 .toList();
-        log.info("results = {}", results);
-
-        return new GradedProblemSetsDto(problems.size(), findProblemSet.getCategories(), results, scoreTotal, score);
     }
 
     private static Map<String, Integer> calculateScorePerCategory(List<Problem> problems, List<Integer> userAnswers, List<String> categories) {
