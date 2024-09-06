@@ -3,12 +3,16 @@ import os
 import pickle
 import json
 import ast
+
+from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from pydantic import BaseModel, Field
 from typing import List
 
+load_dotenv()
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
 def question_generation(ref_text) -> str:
     llm = ChatOpenAI(model='gpt-4o-mini', temperature=0.3)
