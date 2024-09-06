@@ -14,5 +14,6 @@ public class GradedProblemDto {
     private boolean correct;
     private int answer;
     private String explanation;
+    private String category;
 
 }
