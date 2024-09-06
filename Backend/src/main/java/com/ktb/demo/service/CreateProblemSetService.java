@@ -7,11 +7,13 @@ import com.ktb.demo.entity.ProblemSet;
 import com.ktb.demo.feign.AiClient;
 import com.ktb.demo.repository.ProblemSetRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CreateProblemSetService {
@@ -23,16 +25,21 @@ public class CreateProblemSetService {
     public ProblemSet save(String note) {
 
         AiCreateProblemSetResponse response = aiClient.generateProblemSet(new AiCreateProblemSetRequest(note));
+        log.info("AiCreateProblemSetResponse = {}", response.toString());
 
         List<Problem> problems = response.getProblems().stream()
                 .map(Problem::of)
                 .toList();
+        log.info("problems = {}", problems);
 
-        return problemSetRepository.save(ProblemSet.builder()
+        ProblemSet problemSet = ProblemSet.builder()
                 .count(response.getCount())
                 .problems(problems)
-                .build()
-        );
+                .categories(response.getCategories())
+                .build();
+        log.info("problemSet = {}", problemSet);
+
+        return problemSetRepository.save(problemSet);
     }
 
 }
