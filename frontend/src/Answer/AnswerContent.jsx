@@ -56,10 +56,6 @@ function AnswerContent({ userAnswer, problemIndex, result }) {
         </p>
         <p>Correct answer: {answerLabels[correctAnswer]}</p>
       </div>
-      <div className="a-explanation">
-        <h3>설명</h3>
-        <p>{result.explanation}</p>
-      </div>
     </div>
   );
 }

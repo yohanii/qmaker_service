@@ -100,8 +100,20 @@ function Answer() {
           </button>
         </div>
       </div>
+      <div className='ex-chart'>
+        <div className='a-explanation'>
+          <h3>설명</h3>
+          {results[currentProblem].explanation}
+        </div>
+        <div className='a-chart'>
+          {/* <Chart /> */}
+          chart
+        </div>
+      </div>
     </div>
   );
 }
 
 export default Answer;
+
+

@@ -8,16 +8,17 @@
 .progress-wrapper {
   flex: 0.02;
   align-items: flex-start;
-  margin: 1% 0 2% 2%;
+  margin: 1% 0 2% 0;
 }
 
 .sidebar {
   flex: 1;
   display: flex;
-  align-items: center;
+  align-items:center;
   justify-content: center;
-  margin-right: 2%;
-  border-radius: 10px;
+  margin-left: 10px;
+  margin: 1% 2% 2% 0;
+  margin-left: 10px;
 }
 
 .quiz {
@@ -54,6 +55,7 @@
 
 .nav-button:hover:not(:disabled) { 
   background-color: #45a049;
+  opacity: 0.5;
 }
 
 .nav-button:disabled {
