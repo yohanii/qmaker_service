@@ -1,6 +1,7 @@
 package com.ktb.demo.service;
 
 import com.ktb.demo.dto.GradedProblemDto;
+import com.ktb.demo.dto.GradedProblemSetsDto;
 import com.ktb.demo.entity.Problem;
 import com.ktb.demo.entity.ProblemSet;
 import com.ktb.demo.repository.ProblemSetRepository;
@@ -22,7 +23,7 @@ public class GradingProblemSetService {
     private final ProblemSetRepository problemSetRepository;
     private final MongoTemplate mongoTemplate;
 
-    public List<GradedProblemDto> gradeProblemSet(String problemSetId, String answers) {
+    public GradedProblemSetsDto gradeProblemSet(String problemSetId, String answers) {
 
         List<Integer> userAnswers = splitEachAnswers(answers);
 
@@ -38,13 +39,18 @@ public class GradingProblemSetService {
         log.info("score = {}", score);
 
         AtomicInteger index = new AtomicInteger();
-        return problems.stream()
+        List<GradedProblemDto> results = problems.stream()
                 .map(problem -> new GradedProblemDto(
                         problem.getAnswer() == userAnswers.get(index.getAndIncrement()),
                         problem.getAnswer(),
-                        problem.getExplanation())
+                        problem.getExplanation(),
+                        problem.getCategory()
+                        )
                 )
                 .toList();
+        log.info("results = {}", results);
+
+        return new GradedProblemSetsDto(problems.size(), findProblemSet.getCategories(), results, scoreTotal, score);
     }
 
     private static Map<String, Integer> calculateScorePerCategory(List<Problem> problems, List<Integer> userAnswers, List<String> categories) {
