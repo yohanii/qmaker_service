@@ -4,7 +4,7 @@ import Mainpage from './Mainpage/Mainpage';
 import Header from './Layout/Header';
 import Quiz from './Quiz/Quiz';
 import Answer from './Answer/answer';
-import Chart from './Chart/Chart';
+import ChartResult from './Chart/ChartResult';
 import './App.css';
 
 
@@ -17,7 +17,7 @@ function App() {
       <Route path="/" element={<Mainpage />}></Route>
       <Route path="quiz" element={<Quiz />}></Route>
       <Route path="answer" element={<Answer />}></Route>
-      <Route path="chart" element={<Chart />}></Route>
+      <Route path="chart" element={<ChartResult />}></Route>
       </Routes>
       </BrowserRouter>
     </div>
