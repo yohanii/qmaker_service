@@ -1,0 +1,17 @@
+fastapi
+uvicorn
+python-dotenv
+pydantic
+pydantic-settings
+
+aiomysql
+greenlet
+cryptography
+apscheduler
+openpyxl
+
+langchain
+langchain-community
+langchain_openai
+langchain-core
+langchain-core

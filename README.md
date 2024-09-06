@@ -1,2 +1,2 @@
 # qmaker
-KakaoTechBootcamp Hackerton : QMaker Repository
+KakaoTechBootcamp Hackathon : QMaker Repository
