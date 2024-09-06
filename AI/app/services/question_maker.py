@@ -100,8 +100,24 @@ def question_generation(ref_text,text_category) -> str:
 
 def category_question_generation(ref_text) -> list:
     category_text = question_categorize(ref_text)
+    low_categories = set([p.category for p in category_text])
+    print(len(ref_text))
+    print(len(low_categories))
+    for n in range(0,3):
+        if len(low_categories) == 5:
+            break
+        if n == 0:
+            if len(ref_text) <= 5000:
+                ref_text = ref_text[:-1000]
+            else:
+                ref_text = ref_text[:5000]
+        else:
+            ref_text = ref_text[:-1000]
+        category_text = question_categorize(ref_text)
+        print(len(low_categories))
+        print(len(ref_text))
     category_questions = []
     for category in category_text:
         category_questions.extend(json.loads(question_generation(category.origin_text, category.category)))
-    return category_questions
+    return category_questions,low_categories
 

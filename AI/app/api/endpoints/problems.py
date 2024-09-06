@@ -20,8 +20,10 @@ async def get_question(request: CreateProblemsRequest) -> ProblemsResponse:
     logger.info("get_question start")
     logger.info(f"note : {note}")
 
-    problems = category_question_generation(note)
+    problems,low_categories = category_question_generation(note)
+    categoriescount = len(low_categories)
     logger.info(f"problems : {problems}")
+    logger.info(f"categoriescount : {categoriescount}")
 
     categories = set([p['category'] for p in problems])
     logger.info(f"categories : {categories}")
