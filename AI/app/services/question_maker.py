@@ -38,7 +38,7 @@ def question_generation(ref_text) -> str:
     - 문제는 총 10개 출제해주세요.
 
     출력 방식은 다음과 같습니다:
-    - [{{"question" : "", "options" : ["", "", "", ""], "answer" : 0, "explanation" : ""}}, {{}}]
+    - [{{"question" : "", "options" : ["", "", "", ""], "answer" : 0, "explanation" : "","category" : ""}}, {{}}]
     - question은 문제 내용, options는 선택지, answer는 정답, explanation은 문제 출처입니다.
     - answer는 0, 1, 2, 3 중 하나로, 선택지를 의미합니다.
     '''
