@@ -50,8 +50,12 @@ def question_categorize(ref_text) -> str:
     response = chain.invoke({
         'text': ref_text
     })
-    cleaned_response = data_cleaning(response)
-    categorises = json.loads(cleaned_response)
+    try:
+        cleaned_response = data_cleaning(response)
+        categorises = json.loads(cleaned_response)
+    except Exception as e:
+        print(e)
+        categorises = json.loads(response)
     user_texts_list = [UserTextCategorise(**c) for c in categorises]
 
     return user_texts_list
