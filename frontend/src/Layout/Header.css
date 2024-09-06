@@ -1,11 +1,18 @@
+@font-face {
+    font-family: 'GangwonEduPowerExtraBoldA';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduPowerExtraBoldA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body{
-    margin-top: 24px;
+    padding-top: 2%;
 }
 
 .Logo {
     text-decoration: none;
-    margin-left: 8%;
+    margin-left: 3%;
     color: inherit;
-    margin-top: 5%;
     font-size: 35px;
+    font-family: GangwonEduPowerExtraBoldA;
 }

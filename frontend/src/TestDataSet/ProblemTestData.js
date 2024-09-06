@@ -1,5 +1,5 @@
 export const ProblemTestDataSet = {
-  problem_set_id: 1,
+  problem_set_id: "1",
   count: 10,
   problems: [
     {

@@ -4,6 +4,8 @@ import Mainpage from './Mainpage/Mainpage';
 import Header from './Layout/Header';
 import Quiz from './Quiz/Quiz';
 import Answer from './Answer/answer';
+import './App.css';
+
 
 function App() {
   return (
