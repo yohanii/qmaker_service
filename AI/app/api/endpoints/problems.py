@@ -23,7 +23,7 @@ async def get_question(request: CreateProblemsRequest) -> ProblemsResponse:
     problems = json.loads(question_generation(note))
     logger.info(f"problems : {problems}")
 
-    categories = set([p["category"] for p in problems])
+    categories = set([p['category'] for p in problems])
     logger.info(f"categories : {categories}")
 
     response = ProblemsResponse(
