@@ -34,6 +34,7 @@ def question_categorize(ref_text) -> str:
         - 이때 반드시 분류한 문서 내용을 원문 그대로 저장하세요. 문서를 요약하거나 다른 형식으로 저장하지 마세요.
         - A문서부터 E문서를 모두 더한 분량이 반드시 전체 text 문서의 분량과 같아야 합니다. 즉 전체 text 문서 분량 중에서 origin_text에 포함되지 않는 내용이 한 글자라도 있어서는 안 됩니다.
     출력 방식은 다음과 같습니다:
+    - json형식이다.
     - [{{"category" : "", "origin_text" : ""}}, {{}}]
     
     '''
@@ -45,13 +46,13 @@ def question_categorize(ref_text) -> str:
     response = chain.invoke({
         'text': ref_text
     })
-    # cleaned_data = response.replace('json', '')
-    print(response)
-    print(type(response))  # testquestion의 타입 확인
-    # categorises = json.loads(response)
-    # user_texts_list = [UserTextCategorise(**c) for c in categorises]
+    cleaned_data = response.replace('json', '')
+    cleaned_data = cleaned_data.replace('```', '')
+    cleaned_data = cleaned_data.strip()
+    categorises = json.loads(cleaned_data)
+    user_texts_list = [UserTextCategorise(**c) for c in categorises]
 
-    return response
+    return user_texts_list
 
 
 
@@ -102,6 +103,6 @@ def category_question_generation(ref_text) -> list:
     category_questions = []
     for category in category_text:
         category_question = json.loads(question_generation(category.origin_text, category.category))
-        category_questions.append = category_question
+        category_questions.append(category_question)
     return category_questions
 
