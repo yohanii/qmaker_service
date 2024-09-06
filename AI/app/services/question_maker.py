@@ -20,6 +20,21 @@ OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 def question_categorize(ref_text) -> str:
     llm = ChatOpenAI(model='gpt-4o-mini', temperature=0.3)
     textbook = '''
+    text : {text}
+    당신은 텍스트 문서의 내용을 주제별로 분류하는 문서 분류기입니다.
+    1. category
+    : 사용자가 제공한 text 문서를 5개의 주제(카테고리)로 분류하세요.
+        - 예를 들어 클라우드 컴퓨팅이 주제인 text라면 클라우드 컴퓨팅의 개념, 클라우드 네이티브, AWS, EC2, 보안과 프라이버시라는 카테고리로 분류할 수 있습니다.
+        - 분류한 주제를 각각 A, B, C, D, E라고 부르겠습니다.
+        - 지엽적인 내용이 하나의 카테고리가 되는 것은 지양해야 합니다.
+    2. origin_text
+    : 사용자가 제공한 text 문서를 1에서 분류한 주제에 맞게 나누세요.
+        - 예를 들어 A 카테고리에 해당하는 내용을 전체 text 문서에서 찾으세요.
+        - 그리고 나누어진 내용을 각각 문자열로 origin_text에 저장하세요.
+        - 이때 반드시 분류한 문서 내용을 원문 그대로 저장하세요. 문서를 요약하거나 다른 형식으로 저장하지 마세요.
+        - A문서부터 E문서를 모두 더한 분량이 반드시 전체 text 문서의 분량과 같아야 합니다. 즉 전체 text 문서 분량 중에서 origin_text에 포함되지 않는 내용이 한 글자라도 있어서는 안 됩니다.
+    출력 방식은 다음과 같습니다:
+    - [{{"category" : "", "origin_text" : ""}}, {{}}]
     
     '''
     # ChatPromptTemplate을 사용해 프롬프트 생성
@@ -30,15 +45,18 @@ def question_categorize(ref_text) -> str:
     response = chain.invoke({
         'text': ref_text
     })
-    categorises = json.load(response)
-    user_texts_list = [UserTextCategorise(**c) for c in categorises]
+    # cleaned_data = response.replace('json', '')
+    print(response)
+    print(type(response))  # testquestion의 타입 확인
+    # categorises = json.loads(response)
+    # user_texts_list = [UserTextCategorise(**c) for c in categorises]
 
-    return user_texts_list
+    return response
 
 
 
 
-def question_generation(ref_text) -> str:
+def question_generation(ref_text,text_category) -> str:
     llm = ChatOpenAI(model='gpt-4o-mini', temperature=0.3)
     textbook = '''
     text : {text}
@@ -59,11 +77,11 @@ def question_generation(ref_text) -> str:
     시험문제의 형식은 다음과 같습니다:
     - 객관식, 4지선다형입니다.
     - 정답은 반드시 한 개여야 합니다.
-    - 문제는 총 10개 출제해주세요.
+    - 문제는 총 2개 출제해주세요.
 
     출력 방식은 다음과 같습니다:
     - [{{"question" : "", "options" : ["", "", "", ""], "answer" : 0, "explanation" : "","category" : ""}}, {{}}]
-    - question은 문제 내용, options는 선택지, answer는 정답, explanation은 문제 출처입니다.
+    - question은 문제 내용, options는 선택지, answer는 정답, explanation은 문제 출처, category는 {category}입니다.
     - answer는 0, 1, 2, 3 중 하나로, 선택지를 의미합니다.
     '''
     # ChatPromptTemplate을 사용해 프롬프트 생성
@@ -72,7 +90,18 @@ def question_generation(ref_text) -> str:
     chain = prompt | llm | StrOutputParser()
 
     response = chain.invoke({
-        'text': ref_text
+        'text': ref_text,
+        'category': text_category
     })
 
     return response
+
+
+def category_question_generation(ref_text) -> list:
+    category_text = question_categorize(ref_text)
+    category_questions = []
+    for category in category_text:
+        category_question = json.loads(question_generation(category.origin_text, category.category))
+        category_questions.append = category_question
+    return category_questions
+
