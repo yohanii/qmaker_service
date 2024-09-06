@@ -26,7 +26,6 @@ function ChartResult() {
 
     console.log("Score List: ", scoreList);
 
-
     const options = {
         chart: {
             type: 'radar',
@@ -75,6 +74,9 @@ function ChartResult() {
             </div>
             <div className="description">
                 * %로 표현한 결과입니다.
+            </div>
+            <div className="score-total">
+                {scoreTotal}/10
             </div>
             
         </>
