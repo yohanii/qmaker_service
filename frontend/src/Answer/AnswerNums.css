@@ -49,12 +49,18 @@
     margin-left: auto;
 }
 
-.solved {
+.correct {
+    border-radius: 50%;
     background-color: #3FC800;
-    opacity: 0.5;
+}
+
+.incorrect {
+    
+    border-radius: 50%;
+    background-color: #FF0000;
 }
 
 .unsolved {
+    border-radius: 50%;
     background-color: #F2F2F2;
 }
-

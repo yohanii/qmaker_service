@@ -6,6 +6,7 @@ import Quiz from './Quiz/Quiz';
 import Answer from './Answer/answer';
 import './App.css';
 
+
 function App() {
   return (
     <div className="App">
