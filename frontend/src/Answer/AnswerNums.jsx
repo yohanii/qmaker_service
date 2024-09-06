@@ -5,7 +5,7 @@ function AnswerNums({ currentProblem, onProblemSelect, results, userAnswers }) {
   const numbers = Array.from({ length: 10 }, (_, i) => i + 1);
 
   return (
-    <div className="nums-container">
+    <div className="a-nums-container">
       {numbers.map((num, index) => {
         const problemData = JSON.parse(
           sessionStorage.getItem(`problem_${index}`)
@@ -25,16 +25,16 @@ function AnswerNums({ currentProblem, onProblemSelect, results, userAnswers }) {
         }
 
         return (
-          <div className="button-container" key={index}>
+          <div className="a-button-container" key={index}>
             <button
-              className={`num-button ${
+              className={`a-num-button ${
                 index === currentProblem ? 'active' : ''
               }`}
               onClick={() => onProblemSelect(index)}
             >
               {formattedNum}. {truncatedTitle}
             </button>
-            <div className={`status ${statusClass}`}></div>
+            <div className={`a-status ${statusClass}`}></div>
           </div>
         );
       })}

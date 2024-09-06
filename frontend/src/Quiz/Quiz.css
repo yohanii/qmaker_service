@@ -24,7 +24,7 @@
   flex: 4;
   background-color: #f3f3f3;
   flex-direction: column;
-  padding: 30px;
+  padding: 50px 30px 30px 50px;
   margin: 1% 3% 2% 0;
   display: flex;
 }
@@ -38,22 +38,21 @@
   height: 10%;
   display: flex;
   justify-content: space-between;
-  align-items: end;
+  align-items:end;
 }
 
 .nav-button {
   padding: 10px 20px;
   font-size: 16px;
   background-color: #ccc;
-  color: rgb(0, 0, 0);
+  color: rgb(0, 0, 0); 
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-
-.nav-button:hover:not(:disabled) {
+.nav-button:hover:not(:disabled) { 
   background-color: #45a049;
 }
 

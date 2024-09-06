@@ -57,11 +57,11 @@ function Answer() {
   if (!results) return <div>Loading...</div>;
 
   return (
-    <div className="width-container">
-      <div className="progress-wrapper">
+    <div className="a-width-container">
+      <div className="a-progress-wrapper">
         <ProgressBar solvedCount={10} />
       </div>
-      <div className="sidebar">
+      <div className="a-sidebar">
         <AnswerNums
           currentProblem={currentProblem}
           onProblemSelect={handleProblemSelect}
@@ -69,30 +69,30 @@ function Answer() {
           userAnswers={userAnswers}
         />
       </div>
-      <div className="quiz">
-        <div className="quiz-contents">
+      <div className="a-quiz">
+        <div className="a-quiz-contents">
           <AnswerContent
             userAnswer={userAnswers[currentProblem]}
             problemIndex={currentProblem}
             result={results[currentProblem]}
           />
         </div>
-        <div className="navigation-buttons">
+        <div className="a-navigation-buttons">
           <button
-            className="nav-button prev-button"
+            className="a-nav-button prev-button"
             onClick={handlePrev}
             disabled={currentProblem === 0}
           >
             ←
           </button>
           <button
-            className="nav-button reset-button"
+            className="a-nav-button reset-button"
             onClick={handleReset}
           >
             Restart Q-maker
           </button>
           <button
-            className="nav-button next-button"
+            className="a-nav-button next-button"
             onClick={handleNext}
             disabled={currentProblem === 9}
           >
