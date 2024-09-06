@@ -51,12 +51,8 @@ def question_categorize(ref_text) -> str:
         'text': ref_text
     })
     # print(response)
-    try:
-        cleaned_response = data_cleaning(response)
-        categorises = json.loads(cleaned_response)
-    except Exception as e:
-        print(e)
-        categorises = json.loads(response)
+    cleaned_response = data_cleaning(response)
+    categorises = json.loads(cleaned_response)
     user_texts_list = [UserTextCategorise(**c) for c in categorises]
 
     return user_texts_list
@@ -100,10 +96,10 @@ def question_generation(ref_text, text_category) -> str:
         'category': text_category
     })
     # print(response)
-    try:
-        cleaned_response = data_cleaning(response)
-    except Exception as e:
-        cleaned_response = response
+    #try:
+    cleaned_response = data_cleaning(response)
+    #except Exception as e:
+    #    cleaned_response = response
     return cleaned_response
 
 
