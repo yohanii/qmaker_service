@@ -1,4 +1,5 @@
 import json
+from unicodedata import category
 
 from fastapi import APIRouter
 
@@ -22,8 +23,12 @@ async def get_question(request: CreateProblemsRequest) -> ProblemsResponse:
     problems = json.loads(question_generation(note))
     logger.info(f"problems : {problems}")
 
+    categories = set([p["category"] for p in problems])
+    logger.info(f"categories : {categories}")
+
     response = ProblemsResponse(
         count=len(problems),
+        categories=list(categories),
         problems=[Problem(**p) for p in problems]
     )
     logger.info(f"response : {response}")
