@@ -72,7 +72,7 @@ jobs:
                 "sudo docker rm backend || true",
                 "sudo docker image rm ${{ env.DOCKER_HUB_USERNAME }}/qmaker-backend:latest",
                 "sudo docker pull ${{ env.DOCKER_HUB_USERNAME }}/qmaker-backend:latest",
-                "sudo docker run -d --name backend --network ec2-user_export_network -p 8080:8080 -e "SPRING_DATA_MONGODB_URI=mongodb+srv://dygks924:1234@cluster0.dyrgm.mongodb.net/mydb?retryWrites=true&w=majority" -e "AI_SERVICE_URL=http://localhost:8000/api/v1" ${{ env.DOCKER_HUB_USERNAME }}/qmaker-backend:latest",
+                "sudo docker run -d --name backend --network ec2-user_export_network -p 8080:8080 -e \"SPRING_DATA_MONGODB_URI=mongodb+srv://dygks924:1234@cluster0.dyrgm.mongodb.net/mydb?retryWrites=true&w=majority\" -e \"AI_SERVICE_URL=http://localhost:8000/api/v1\" ***/qmaker-backend:latest"
               ]
             }'
       - name: Deploy Backend_1 instance services
@@ -86,7 +86,7 @@ jobs:
                 "sudo docker rm backend || true",
                 "sudo docker image rm ${{ env.DOCKER_HUB_USERNAME }}/qmaker-backend:latest",
                 "sudo docker pull ${{ env.DOCKER_HUB_USERNAME }}/qmaker-backend:latest",
-                "sudo docker run -d --name backend --network ec2-user_export_network -p 8080:8080 -e "SPRING_DATA_MONGODB_URI=mongodb+srv://dygks924:1234@cluster0.dyrgm.mongodb.net/mydb?retryWrites=true&w=majority" -e "AI_SERVICE_URL=http://localhost:8000/api/v1" ${{ env.DOCKER_HUB_USERNAME }}/qmaker-backend:latest",
+                "sudo docker run -d --name backend --network ec2-user_export_network -p 8080:8080 -e \"SPRING_DATA_MONGODB_URI=mongodb+srv://dygks924:1234@cluster0.dyrgm.mongodb.net/mydb?retryWrites=true&w=majority\" -e \"AI_SERVICE_URL=http://localhost:8000/api/v1\" ***/qmaker-backend:latest"
               ]
             }'
       - name: Deploy AI_0 instance services
@@ -100,7 +100,7 @@ jobs:
                 "sudo docker rm ai || true",
                 "sudo docker image rm ${{ env.DOCKER_HUB_USERNAME }}/qmaker-ai:latest",
                 "sudo docker pull ${{ env.DOCKER_HUB_USERNAME }}/qmaker-ai:latest",
-                "sudo docker run -d --name ai --network ec2-user_export_network -p 8000:8000 -e PROJECT_NAME=QuestionMakerAI ${{ env.DOCKER_HUB_USERNAME }}/qmaker-ai:latest"
+                "sudo docker run -d --name ai --network ec2-user_export_network -p 8000:8000 -e \"PROJECT_NAME=QuestionMakerAI\" ${{ env.DOCKER_HUB_USERNAME }}/qmaker-ai:latest"
               ]
             }'
       - name: Deploy AI_1 instance services
@@ -114,7 +114,7 @@ jobs:
                 "sudo docker rm ai || true",
                 "sudo docker image rm ${{ env.DOCKER_HUB_USERNAME }}/qmaker-ai:latest",
                 "sudo docker pull ${{ env.DOCKER_HUB_USERNAME }}/qmaker-ai:latest",
-                "sudo docker run -d --name ai --network ec2-user_export_network -p 8000:8000 -e PROJECT_NAME=QuestionMakerAI ${{ env.DOCKER_HUB_USERNAME }}/qmaker-ai:latest"
+                "sudo docker run -d --name ai --network ec2-user_export_network -p 8000:8000 -e \"PROJECT_NAME=QuestionMakerAI\" ${{ env.DOCKER_HUB_USERNAME }}/qmaker-ai:latest"
               ]
             }'
 
