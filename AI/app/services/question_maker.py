@@ -10,9 +10,33 @@ from langchain.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from pydantic import BaseModel, Field
 from typing import List
+from app.models.problems_response import UserTextCategorise
+
 
 load_dotenv()
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+
+
+def question_categorize(ref_text) -> str:
+    llm = ChatOpenAI(model='gpt-4o-mini', temperature=0.3)
+    textbook = '''
+    
+    '''
+    # ChatPromptTemplate을 사용해 프롬프트 생성
+    prompt = ChatPromptTemplate.from_template(textbook)
+
+    chain = prompt | llm | StrOutputParser()
+
+    response = chain.invoke({
+        'text': ref_text
+    })
+    categorises = json.load(response)
+    user_texts_list = [UserTextCategorise(**c) for c in categorises]
+
+    return user_texts_list
+
+
+
 
 def question_generation(ref_text) -> str:
     llm = ChatOpenAI(model='gpt-4o-mini', temperature=0.3)
@@ -38,7 +62,7 @@ def question_generation(ref_text) -> str:
     - 문제는 총 10개 출제해주세요.
 
     출력 방식은 다음과 같습니다:
-    - [{{"question" : "", "options" : ["", "", "", ""], "answer" : 0, "explanation" : ""}}, {{}}]
+    - [{{"question" : "", "options" : ["", "", "", ""], "answer" : 0, "explanation" : "","category" : ""}}, {{}}]
     - question은 문제 내용, options는 선택지, answer는 정답, explanation은 문제 출처입니다.
     - answer는 0, 1, 2, 3 중 하나로, 선택지를 의미합니다.
     '''
