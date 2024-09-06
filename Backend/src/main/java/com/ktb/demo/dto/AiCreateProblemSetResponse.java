@@ -14,6 +14,7 @@ import java.util.List;
 public class AiCreateProblemSetResponse {
 
     private int count;
+    private List<String> categories;
     private List<ProblemDto> problems;
 
 }
