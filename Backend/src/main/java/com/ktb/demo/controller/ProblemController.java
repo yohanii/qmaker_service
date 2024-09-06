@@ -2,27 +2,38 @@ package com.ktb.demo.controller;
 
 
 import com.ktb.demo.dto.CreateProblemSetsResponse;
+import com.ktb.demo.dto.GradedProblemDto;
+import com.ktb.demo.dto.GradedProblemSetsResponse;
 import com.ktb.demo.entity.ProblemSet;
-import com.ktb.demo.service.ProblemSetService;
+import com.ktb.demo.service.CreateProblemSetService;
+import com.ktb.demo.service.GradingProblemSetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1")
 public class ProblemController {
 
-    private final ProblemSetService problemSetService;
+    private final CreateProblemSetService createProblemSetService;
+    private final GradingProblemSetService gradingProblemSetService;
 
     @PostMapping("/problem-sets")
     public ResponseEntity<CreateProblemSetsResponse> createProblemSetsResponse(@RequestBody String note){
 
-        ProblemSet problemSet = problemSetService.save(note);
+        ProblemSet problemSet = createProblemSetService.save(note);
 
         return ResponseEntity.ok(CreateProblemSetsResponse.of(problemSet));
+    }
+
+    @GetMapping("/problem-sets/{problemSetId}/solved")
+    public ResponseEntity<GradedProblemSetsResponse> gradingProblemSet(@PathVariable String problemSetId, @RequestParam String answers){
+
+        List<GradedProblemDto> gradedProblemDtos = gradingProblemSetService.gradeProblemSet(problemSetId, answers);
+
+        return ResponseEntity.ok(GradedProblemSetsResponse.of(gradedProblemDtos));
     }
 }
