@@ -3,6 +3,7 @@ package com.ktb.demo.controller;
 
 import com.ktb.demo.dto.CreateProblemSetsResponse;
 import com.ktb.demo.dto.GradedProblemDto;
+import com.ktb.demo.dto.GradedProblemSetsDto;
 import com.ktb.demo.dto.GradedProblemSetsResponse;
 import com.ktb.demo.entity.ProblemSet;
 import com.ktb.demo.service.CreateProblemSetService;
@@ -32,8 +33,8 @@ public class ProblemController {
     @GetMapping("/problem-sets/{problemSetId}/solved")
     public ResponseEntity<GradedProblemSetsResponse> gradingProblemSet(@PathVariable String problemSetId, @RequestParam String answers){
 
-        List<GradedProblemDto> gradedProblemDtos = gradingProblemSetService.gradeProblemSet(problemSetId, answers);
+        GradedProblemSetsDto gradedProblemSetsDto = gradingProblemSetService.gradeProblemSet(problemSetId, answers);
 
-        return ResponseEntity.ok(GradedProblemSetsResponse.of(gradedProblemDtos));
+        return ResponseEntity.ok(GradedProblemSetsResponse.of(gradedProblemSetsDto));
     }
 }

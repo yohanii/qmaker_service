@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Map;
+
 
 @Getter
 @Setter
@@ -14,9 +16,19 @@ import java.util.List;
 public class GradedProblemSetsResponse {
 
     private int count;
+    private List<String> categories;
     private List<GradedProblemDto> results;
+    private int scoreTotal;
+    private Map<String, Integer> score;
 
-    public static GradedProblemSetsResponse of(List<GradedProblemDto> gradedProblemDtos) {
-        return new GradedProblemSetsResponse(gradedProblemDtos.size(), gradedProblemDtos);
+    public static GradedProblemSetsResponse of(GradedProblemSetsDto gradedProblemSetsDto) {
+
+        return new GradedProblemSetsResponse(
+                gradedProblemSetsDto.getCount(),
+                gradedProblemSetsDto.getCategories(),
+                gradedProblemSetsDto.getResults(),
+                gradedProblemSetsDto.getScoreTotal(),
+                gradedProblemSetsDto.getScore()
+        );
     }
 }
