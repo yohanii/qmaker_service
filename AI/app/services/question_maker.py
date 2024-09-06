@@ -12,10 +12,14 @@ from pydantic import BaseModel, Field
 from typing import List
 from app.models.problems_response import UserTextCategorise
 
-
 load_dotenv()
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
+def data_cleaning(ref_text: str) -> str:
+    cleaned_data_json = ref_text.replace('json', '')
+    cleaned_data_back = cleaned_data_json.replace('```', '')
+    cleaned_data = cleaned_data_back.strip()
+    return cleaned_data
 
 def question_categorize(ref_text) -> str:
     llm = ChatOpenAI(model='gpt-4o-mini', temperature=0.3)
@@ -46,18 +50,14 @@ def question_categorize(ref_text) -> str:
     response = chain.invoke({
         'text': ref_text
     })
-    cleaned_data = response.replace('json', '')
-    cleaned_data = cleaned_data.replace('```', '')
-    cleaned_data = cleaned_data.strip()
-    categorises = json.loads(cleaned_data)
+    cleaned_response = data_cleaning(response)
+    categorises = json.loads(cleaned_response)
     user_texts_list = [UserTextCategorise(**c) for c in categorises]
 
     return user_texts_list
 
 
-
-
-def question_generation(ref_text,text_category) -> str:
+def question_generation(ref_text, text_category) -> str:
     llm = ChatOpenAI(model='gpt-4o-mini', temperature=0.3)
     textbook = '''
     text : {text}
@@ -94,8 +94,8 @@ def question_generation(ref_text,text_category) -> str:
         'text': ref_text,
         'category': text_category
     })
-
-    return response
+    cleaned_response = data_cleaning(response)
+    return cleaned_response
 
 
 def category_question_generation(ref_text) -> list:
@@ -103,7 +103,7 @@ def category_question_generation(ref_text) -> list:
     low_categories = set([p.category for p in category_text])
     print(len(ref_text))
     print(len(low_categories))
-    for n in range(0,3):
+    for n in range(0, 3):
         if len(low_categories) == 5:
             break
         if n == 0:
@@ -119,5 +119,7 @@ def category_question_generation(ref_text) -> list:
     category_questions = []
     for category in category_text:
         category_questions.extend(json.loads(question_generation(category.origin_text, category.category)))
-    return category_questions,low_categories
+    return category_questions, low_categories
+
+
 
