@@ -2,7 +2,8 @@ import json
 
 from fastapi import APIRouter
 
-from app.api.dto.multiple_choice_question import MultipleChoiceQuestion, MultipleChoiceQuestionList
+from app.models.problems_response import Problem, ProblemsResponse
+from app.models.create_problems_request import CreateProblemsRequest
 # from app.models.info import Info
 from app.services.question_maker import question_generation
 import logging
@@ -12,12 +13,19 @@ logger = logging.getLogger("uvicorn")
 
 
 @router.post("/problems")
-async def get_question(ref_text: str = "") -> MultipleChoiceQuestionList:
-    logger.info("get_question start")
-    logger.info(f"ref_text : {ref_text}")
-    questions_list = json.loads(question_generation(ref_text))
-    question_list = MultipleChoiceQuestionList(
-        questions=[MultipleChoiceQuestion(**question) for question in questions_list])
-    logger.info(f"entities : {question_list}")
+async def get_question(request: CreateProblemsRequest) -> ProblemsResponse:
 
-    return question_list
+    note = request.note
+    logger.info("get_question start")
+    logger.info(f"note : {note}")
+
+    problems = json.loads(question_generation(note))
+    logger.info(f"problems : {problems}")
+
+    response = ProblemsResponse(
+        count=len(problems),
+        problems=[Problem(**p) for p in problems]
+    )
+    logger.info(f"response : {response}")
+
+    return response
