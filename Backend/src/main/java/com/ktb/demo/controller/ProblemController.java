@@ -2,12 +2,16 @@ package com.ktb.demo.controller;
 
 
 import com.ktb.demo.dto.CreateProblemSetsResponse;
+import com.ktb.demo.dto.GradedProblemDto;
 import com.ktb.demo.dto.GradedProblemSetsResponse;
 import com.ktb.demo.entity.ProblemSet;
 import com.ktb.demo.service.CreateProblemSetService;
+import com.ktb.demo.service.GradingProblemSetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class ProblemController {
 
     private final CreateProblemSetService createProblemSetService;
+    private final GradingProblemSetService gradingProblemSetService;
 
     @PostMapping("/problem-sets")
     public ResponseEntity<CreateProblemSetsResponse> createProblemSetsResponse(@RequestBody String note){
@@ -27,8 +32,8 @@ public class ProblemController {
     @GetMapping("/problem-sets/{problemSetId}/solved")
     public ResponseEntity<GradedProblemSetsResponse> gradingProblemSet(@PathVariable String problemSetId, @RequestParam String answers){
 
-        return null;
+        List<GradedProblemDto> gradedProblemDtos = gradingProblemSetService.gradeProblemSet(problemSetId, answers);
 
-//        return ResponseEntity.ok("");
+        return ResponseEntity.ok(GradedProblemSetsResponse.of(gradedProblemDtos));
     }
 }
