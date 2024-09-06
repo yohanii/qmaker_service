@@ -1,5 +1,11 @@
+body{
+    margin-top: 24px;
+}
 
-
-.Logo{
+.Logo {
+    text-decoration: none;
     margin-left: 8%;
+    color: inherit;
+    margin-top: 5%;
+    font-size: 35px;
 }
