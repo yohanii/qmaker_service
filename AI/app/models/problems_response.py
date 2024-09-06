@@ -17,3 +17,10 @@ class ProblemsResponse(BaseModel):
     count: int = Field(description="Number of problems")
     categories: List[str] = Field(description="Categories of the problems")
     problems: List[Problem] = Field(description="List of problems ")
+
+
+
+class UserTextCategorise(BaseModel):
+    category: str = Field(description="Category of user text")
+    origin_text: str = Field(description="Original text of the user text")
+

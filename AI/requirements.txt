@@ -14,3 +14,4 @@ langchain
 langchain-community
 langchain_openai
 langchain-core
+langchain-core
