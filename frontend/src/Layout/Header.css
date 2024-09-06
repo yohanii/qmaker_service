@@ -5,15 +5,22 @@
     font-style: normal;
 }
 
-body{
+body {
     padding-top: 2%;
 }
 
 .Logo {
+    display: flex;
+    align-items: center;
     text-decoration: none;
     margin-left: 3%;
     color: inherit;
     font-size: 35px;
-    font-family: GangwonEduPowerExtraBoldA;
-    width: 200px;
+    font-family: 'GangwonEduPowerExtraBoldA';
+}
+
+.QlogoImage {
+    width: 40px; 
+    height: 40px;
+    margin-right: 10px;
 }
