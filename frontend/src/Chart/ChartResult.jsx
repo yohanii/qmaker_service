@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ProblemCheckAnswer } from '../TestDataSet/ProblemCheckAnswer';
 import Chart from "react-apexcharts";
+import './ChartResult.css';
 
 function ChartResult() {
     const [categories, setCategories] = useState([]);
@@ -23,7 +24,6 @@ function ChartResult() {
         console.log(tempScoreList);
     }, []);
 
-    console.log("Scores: ", score, "Score Total: ", scoreTotal, "Categories: ", categories);
     console.log("Score List: ", scoreList);
 
 
@@ -72,6 +72,9 @@ function ChartResult() {
                     type="radar"
                     height={350}
                 />
+            </div>
+            <div className="description">
+                * %로 표현한 결과입니다.
             </div>
             
         </>
