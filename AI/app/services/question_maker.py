@@ -12,10 +12,14 @@ from pydantic import BaseModel, Field
 from typing import List
 from app.models.problems_response import UserTextCategorise
 
-
 load_dotenv()
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
+def data_cleaning(ref_text: str) -> str:
+    cleaned_data_json = ref_text.replace('json', '')
+    cleaned_data_back = cleaned_data_json.replace('```', '')
+    cleaned_data = cleaned_data_back.strip()
+    return cleaned_data
 
 def question_categorize(ref_text) -> str:
     llm = ChatOpenAI(model='gpt-4o-mini', temperature=0.3)
@@ -23,7 +27,7 @@ def question_categorize(ref_text) -> str:
     text : {text}
     당신은 텍스트 문서의 내용을 주제별로 분류하는 문서 분류기입니다.
     1. category
-    : 사용자가 제공한 text 문서를 5개의 주제(카테고리)로 분류하세요.
+    : 사용자가 제공한 text 문서를 반드시 5개의 주제(카테고리)로 분류하세요.
         - 예를 들어 클라우드 컴퓨팅이 주제인 text라면 클라우드 컴퓨팅의 개념, 클라우드 네이티브, AWS, EC2, 보안과 프라이버시라는 카테고리로 분류할 수 있습니다.
         - 분류한 주제를 각각 A, B, C, D, E라고 부르겠습니다.
         - 지엽적인 내용이 하나의 카테고리가 되는 것은 지양해야 합니다.
@@ -46,18 +50,15 @@ def question_categorize(ref_text) -> str:
     response = chain.invoke({
         'text': ref_text
     })
-    cleaned_data = response.replace('json', '')
-    cleaned_data = cleaned_data.replace('```', '')
-    cleaned_data = cleaned_data.strip()
-    categorises = json.loads(cleaned_data)
+    # print(response)
+    cleaned_response = data_cleaning(response)
+    categorises = json.loads(cleaned_response)
     user_texts_list = [UserTextCategorise(**c) for c in categorises]
 
     return user_texts_list
 
 
-
-
-def question_generation(ref_text,text_category) -> str:
+def question_generation(ref_text, text_category) -> str:
     llm = ChatOpenAI(model='gpt-4o-mini', temperature=0.3)
     textbook = '''
     text : {text}
@@ -94,14 +95,38 @@ def question_generation(ref_text,text_category) -> str:
         'text': ref_text,
         'category': text_category
     })
-
-    return response
+    # print(response)
+    #try:
+    cleaned_response = data_cleaning(response)
+    #except Exception as e:
+    #    cleaned_response = response
+    return cleaned_response
 
 
 def category_question_generation(ref_text) -> list:
     category_text = question_categorize(ref_text)
+    low_categories = set([p.category for p in category_text])
+    print(len(ref_text))
+    print(len(low_categories))
+    for n in range(0, 3):
+        if len(low_categories) == 5:
+            break
+        if n == 0:
+            if len(ref_text) <= 5000 and len(ref_text) >= 2000:
+                ref_text = ref_text[:-1000]
+            else:
+                ref_text = ref_text[:5000]
+        else:
+            if len(ref_text) >= 2000:
+                ref_text = ref_text[:-1000]
+
+        category_text = question_categorize(ref_text)
+        print(len(low_categories))
+        print(len(ref_text))
     category_questions = []
     for category in category_text:
         category_questions.extend(json.loads(question_generation(category.origin_text, category.category)))
-    return category_questions
+    return category_questions, low_categories
+
+
 
