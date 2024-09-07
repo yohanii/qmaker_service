@@ -1,0 +1,130 @@
+.a-width-container {
+    display: flex;
+    flex-direction: row;
+    height: 90%;
+    margin: 1% 3%;
+}
+
+.a-progress-wrapper {
+    flex: 0.02;
+    align-items: flex-start;
+    margin: 1% 0 2% 0;
+}
+
+.a-sidebar {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1% 2% 2% 0;
+}
+
+.a-quiz {
+    flex: 2;
+    background-color: #f3f3f3;
+    flex-direction: column;
+    padding: 50px 30px 30px 50px;
+    margin: 1% 1% 2% 0;
+    display: flex;
+}
+
+.ex-chart{
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    margin: 1% 2% 2% 0;
+    display: flex;
+    flex-shrink: 0;
+}
+
+.a-explanation{
+    flex: 1;
+    background-color: #f3f3f3;
+    flex-direction: column;
+    padding: 20px;
+    padding-bottom: 20px;
+    margin: 0 3% 2% 0;
+    flex-shrink: 0;
+    max-height: 200px; 
+    overflow: auto;   
+}
+.a-ex-des {
+    font-size: large;
+    font-weight: bold;
+    margin-bottom: 3%;
+
+}
+
+.a-chart{
+    flex: 1;
+    background-color: #f3f3f3;
+    padding: 20px;
+    margin: 1% 3% 0 0;
+    flex-shrink: 0;
+}
+
+.a-quiz-contents {
+    flex: 8;
+  }
+
+.a-navigation-buttons {
+    flex: 1;
+    height: 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items:end;
+}
+
+.a-nav-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #ccc;
+    color: rgb(0, 0, 0); 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.a-nav-button:hover:not(:disabled) { 
+    background-color: #45a049;
+  }
+
+.a-nav-button:disabled {
+    background-color: #f3f3f3;
+    cursor: not-allowed;
+    color: #f3f3f3;
+}
+
+.prev-button {
+    margin-right: 10px;
+  }
+  
+.next-button {
+    margin-left: 10px;
+}
+
+.a-status.correct {
+    background-color: #3FC800;
+    opacity: 0.5;
+}
+
+.a-status.incorrect {
+    background-color: #dc3545;
+    opacity: 0.5;
+}
+
+.reset-button {
+    background-color: #ccc;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.reset-button:hover{
+    background-color: #45a049;
+}
